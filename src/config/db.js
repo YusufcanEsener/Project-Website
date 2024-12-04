@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/adminpanel', {
+        await mongoose.connect('mongodb://localhost:27017/admin', {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
