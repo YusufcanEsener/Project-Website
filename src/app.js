@@ -44,6 +44,10 @@ const requireAuth = (req, res, next) => {
         res.redirect('/auth/login');
     }
 };
+app.get('/programlar', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('programlar', { user });
+});
 
 // Profil sayfası route'u
 app.get('/profile', requireAuth, async (req, res) => {
