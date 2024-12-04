@@ -1,34 +1,76 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayıt Ol</title>
-    <link rel="stylesheet" href="/css/auth.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/giris.css">
+    
+    <title>Kayıt</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/css/giris.css">
 </head>
 <body>
-    <div class="auth-container">
-        <h2>Kayıt Ol</h2>
-        <form class="auth-form" action="/auth/register" method="POST">
-            <div class="form-group">
-                <label for="ad">Ad</label>
-                <input type="text" id="ad" name="ad" required>
+
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Kayıt Ol</h2>
+                        <form method="POST" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="isim"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="isim" id="isim" placeholder="İsim"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="s_isim"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="s_isim" id="s_isim" placeholder="Soyisim"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="yas"><i class="zmdi zmdi-email"></i></label>
+                                <input type="text" name="yas" id="yas" placeholder="Yaşınız"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="numara"><i class="zmdi zmdi-email"></i></label>
+                                <input type="text" name="numara" id="numara" placeholder="Numaranız"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="text" name="email" id="email" placeholder="Mailiniz"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="sifre"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="sifre" id="sifre" placeholder="Şifreniz"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="tekrarsifre"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="tekrarsifre" id="tekrarsifre" placeholder="Tekrar Şifreniz"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>Tüm Şartları Kabul Ediyorum.  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Kayıt Ol"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="yeni1.png" alt="sign up image"></figure>
+                        
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="soyad">Soyad</label>
-                <input type="text" id="soyad" name="soyad" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-posta</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="sifre">Şifre</label>
-                <input type="password" id="sifre" name="sifre" required>
-            </div>
-            <button type="submit" class="submit-btn">Kayıt Ol</button>
-        </form>
-        <p>Zaten hesabınız var mı? <a href="/auth/login">Giriş Yap</a></p>
+        </section>
     </div>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
