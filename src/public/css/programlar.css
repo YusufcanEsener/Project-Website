@@ -1,74 +1,174 @@
 .cardstil {
-    background-color: rgba(28, 13, 112, 0.841);
-    width: 400px;
-  }
-  .card-group {
-    display: flex; /* Kartları yatay sıralar */
-    gap: 20px; /* Kartlar arasında boşluk bırakır */
-    justify-content: center; /* Ortalamak için */
-    align-items: flex-start; /* Yüksekliği hizalar */
-    flex-wrap: nowrap; /* Satır kaymasını önler */
-  }
-  
-  .card {
-    flex: 1; /* Kartların eşit genişlikte olmasını sağlar */
-    margin: 10px; /* Kartların çevresinde boşluk oluşturur */
-    width: 100%; /* Resmin genişliğini %100 yapar */
-    height: auto;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .i {
-    width: 300px;
-  }
-  .cardici {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .card ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-  }
-  
-  .card ul li {
-    margin: 10px 0;
-    position: relative;
-    padding-left: 25px;
-  }
-  .card ul li::before {
-    content: "✔";
-    margin-top: 10px;
-    color: #00ff88;
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 1rem;
-  }
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    background-color: rgb(0, 0, 0);
-  }
-  .detay {
-    margin-bottom: 20px;
-    position: relative;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .detay:hover {
-    transition: background-color 2s ease;
-    background: -webkit-linear-gradient(rgb(10, 207, 178), rgb(0, 4, 255));
-    transform: scale(1.1);
-  }
-  .oklar {
-    display: flex;
-    justify-content: space-around;
-  }
-  .mla {
-    margin-left: 30px;
-    color: #96cdce;
-  }
+  background-color: rgba(28, 13, 112, 0.841);
+  width: 400px;
+}
+.card-group {
+  display: flex; /* Kartları yatay sıralar */
+  gap: 20px; /* Kartlar arasında boşluk bırakır */
+  justify-content: center; /* Ortalamak için */
+  align-items: flex-start; /* Yüksekliği hizalar */
+  flex-wrap: nowrap; /* Satır kaymasını önler */
+}
+
+.card {
+  flex: 1; /* Kartların eşit genişlikte olmasını sağlar */
+  margin: 10px; /* Kartların çevresinde boşluk oluşturur */
+  width: 100%; /* Resmin genişliğini %100 yapar */
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.i {
+  width: 300px;
+}
+.cardici {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.card ul li {
+  margin: 10px 0;
+  position: relative;
+  padding-left: 25px;
+}
+.card ul li::before {
+  content: "✔";
+  margin-top: 10px;
+  color: #00ff88;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1rem;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background-color: rgb(0, 0, 0);
+}
+.detay {
+  margin-bottom: 20px;
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.detay:hover {
+  transition: background-color 2s ease;
+  background: -webkit-linear-gradient(rgb(10, 207, 178), rgb(0, 4, 255));
+  transform: scale(1.1);
+}
+.oklar {
+  display: flex;
+  justify-content: space-around;
+}
+.mla {
+  margin-left: 30px;
+  color: #96cdce;
+}
+/* Footer Container */
+.custom-footer {
+  background-color: #222;
+  color: #fff;
+  padding: 10px 0;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px 15px;
+}
+
+.footer-section h4 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #002fff;
+}
+
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer-links,
+.footer-social {
+  list-style: none;
+  padding: 0;
+  font-size: 22px;
+}
+
+.footer-links li,
+.footer-social li {
+  margin: 5px 0;
+}
+
+.footer-links a,
+.footer-social a {
+  text-decoration: none;
+  color: #aaa;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+  color: #0dff00;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding: 10px 0;
+  font-size: 12px;
+  color: #888;
+}
+.btn {
+  display: inline-block;
+  background: #003703 !important;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+.btn:hover {
+  background: #03103a !important;
+}
+a.button {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #2c9caf;
+  transition: all 1000ms;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid #2c9caf;
+  margin-left: 10px;
+  display: inline-block; /* Önemli: <a> etiketi için blok görünümü sağlanır */
+  text-align: center;
+  text-decoration: none; /* Link alt çizgisini kaldırır */
+  background-color: white;
+}
