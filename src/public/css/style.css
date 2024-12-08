@@ -1,301 +1,363 @@
 /* Genel Stiller */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    color: #fff;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #fff;
 }
 
 body {
-    background: #1a0d40;
-    background-size: cover;
+  background: #1a0d40;
+  background-size: cover;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
 }
-a{
-    text-decoration: none;
-    color: inherit;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 a:hover {
-   color:rgba(241, 167, 28, 1)
+  color: rgba(241, 167, 28, 1);
 }
 
 .logo img {
-    height: 50px;
+  height: 50px;
 }
 
-.auth-buttons .login, .auth-buttons .join {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
+.auth-buttons .login,
+.auth-buttons .join {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .auth-buttons .join {
-    background: orange;
+  background: orange;
 }
 
 .main-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: calc(100vh - 80px);
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: calc(100vh - 80px);
+  position: relative;
 }
 
 .content h1 {
-    font-size: 2.5rem;
-    margin: 0;
+  font-size: 2.5rem;
+  margin: 0;
 }
 
 .content h2 {
-    font-size: 2rem;
-    margin: 10px 0;
+  font-size: 2rem;
+  margin: 10px 0;
 }
 
 .content p {
-    font-size: 1.2rem;
-    margin: 20px 0;
+  font-size: 1.2rem;
+  margin: 20px 0;
 }
 
 .cta-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: gray;
-    color: #000;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: gray;
+  color: #000;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .stats {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-top: 30px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+  border-top: 5px solid rgb(255, 166, 0);
+  border-left: none;
+  border-bottom: 5px solid rgb(0, 255, 8);
+  border-right: none;
+  border-bottom-width: 50%;
+  margin-bottom: 100px;
 }
 
 .stats div {
-    text-align: center;
+  text-align: center;
 }
 
 .stats h3 {
-    font-size: 2rem;
-    margin: 0;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .stats p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .background img {
-    display: none;
+  display: none;
 }
 
 .button {
-    padding: 1em 2em;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #2c9caf;
-    transition: all 1000ms;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-    outline: 2px solid #2c9caf;
-    margin-left: 10px;
-    left:155px;
-    position:relative;
-  }
-  
-  button:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-    outline: 2px solid #70bdca;
-    box-shadow: 4px 5px 17px -4px #268391;
-  }
-  
-  button::before {
-    content: "";
-    position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #2c9caf;
-    transform: skewX(45deg);
-    z-index: -1;
-    transition: width 1000ms;
-  }
-  
-  button:hover::before {
-    width: 150%;
-  }
-  .paketler-section {
-    padding: 40px 20px;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #2c9caf;
+  transition: all 1000ms;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid #2c9caf;
+  margin-left: 10px;
+  left: 155px;
+  position: relative;
+}
+
+button:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+  outline: 2px solid #70bdca;
+  box-shadow: 4px 5px 17px -4px #268391;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #2c9caf;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+button:hover::before {
+  width: 150%;
+}
+.paketler-section {
+  padding: 40px 20px;
 }
 
 .paketler-section h1 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
- 
+  font-size: 2.5rem;
+  margin-bottom: 30px;
 }
 
 /* Paketler Konteyneri */
 .paketler-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    border-width: 40px;
-    border-radius: 10px;
-    box-shadow: 2px 3px 20px -4px #ffffff;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-width: 40px;
+  border-radius: 10px;
+  box-shadow: 2px 3px 20px -4px #ffffff;
 }
 
 /* Paket Kartı */
 .paket {
-    background: #2b3245;
-    padding: 20px;
-    border-radius: 10px;
-    width: 250px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-top: 15px;
-    margin-bottom: 15px;
+  background: #2b3245;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .paket:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    background-color: gray;
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background-color: gray;
 }
 
 .paket h2 {
-    font-size: 1.8rem;
-    margin: 10px 0;
+  font-size: 1.8rem;
+  margin: 10px 0;
 }
 
 .paket .sub-title {
-    font-size: 1.2rem;
-    color: #00aaff;
+  font-size: 1.2rem;
+  color: #00aaff;
 }
 
 .paket .price {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin: 20px 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 .paket .price del {
-    font-size: 1rem;
-    color: #ff6f61;
-    margin-right: 5px;
-    text-decoration: line-through;
+  font-size: 1rem;
+  color: #ff6f61;
+  margin-right: 5px;
+  text-decoration: line-through;
 }
 
 .paket ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
 }
 
 .paket ul li {
-    margin: 10px 0;
-    position: relative;
-    padding-left: 25px;
+  margin: 10px 0;
+  position: relative;
+  padding-left: 25px;
 }
 
 .paket ul li::before {
-    content: "✔";
-    color: #00ff88;
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 1rem;
+  content: "✔";
+  color: #00ff88;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1rem;
 }
 
 /* Buton Stili */
 .btn {
-    display: inline-block;
-    background: #ff6f61;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s ease;
+  display: inline-block;
+  background: #ff6f61;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
 .btn:hover {
-    background: #ff3c2f;
+  background: #ff3c2f;
 }
 /* Sadece <a> etiketinde kullanılacak stil */
 a.button {
-    padding: 1em 2em;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #2c9caf;
-    transition: all 1000ms;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-    outline: 2px solid #2c9caf;
-    margin-left: 10px;
-    display: inline-block; /* Önemli: <a> etiketi için blok görünümü sağlanır */
-    text-align: center;
-    text-decoration: none; /* Link alt çizgisini kaldırır */
-    background-color: white;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #2c9caf;
+  transition: all 1000ms;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid #2c9caf;
+  margin-left: 10px;
+  display: inline-block; /* Önemli: <a> etiketi için blok görünümü sağlanır */
+  text-align: center;
+  text-decoration: none; /* Link alt çizgisini kaldırır */
+  background-color: white;
 }
 
 /* Hover stili */
 a.button:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-    outline: 2px solid #70bdca;
-    box-shadow: 4px 5px 17px -4px #268391;
+  color: #ffffff;
+  transform: scale(1.1);
+  outline: 2px solid #70bdca;
+  box-shadow: 4px 5px 17px -4px #268391;
 }
 
 /* Pseudo-element ::before */
 a.button::before {
-    content: "";
-    position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #2c9caf;
-    transform: skewX(45deg);
-    z-index: -1;
-    transition: width 1000ms;
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #2c9caf;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
 }
 
 /* Hover'da pseudo-element genişliği */
 a.button:hover::before {
-    width: 150%;
+  width: 150%;
 }
-#ok{
-    position: fixed;
-    bottom: 15px;
-    right: 30px;
-    font-size: 45px;
-    width: 50px; 
-    height: 50px; 
-    box-shadow: 0 0 0 2px gray;
-    border-radius: 50%; 
-    text-align: center;
- }
+#ok {
+  position: fixed;
+  bottom: 15px;
+  right: 30px;
+  font-size: 45px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 0 0 2px gray;
+  border-radius: 50%;
+  text-align: center;
+}
+.custom-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-text {
+  text-align: left;
+  margin-left: 80px;
+  border-bottom: none;
+  border-left: 5px solid rgb(0, 255, 8);
+  border-right: none;
+  border-top: 5px solid rgb(255, 255, 255);
+  padding: 30px;
+}
+
+.custom-image-container {
+  text-align: right;
+  border-top: none;
+  border-left: none;
+  border-bottom: 5px solid rgb(0, 255, 8);
+  border-right: none;
+}
+.bord {
+  border-top: none;
+  border-left: none;
+  border-bottom: 5px solid rgb(0, 255, 8);
+  border-right: none;
+}
+.custom-title,
+.custom-subtitle,
+.custom-text-content {
+  margin-bottom: 20px;
+}
+
+.custom-cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(14, 202, 92);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.custom-cta-button:hover {
+  background-color: rgb(10, 150, 70);
+}
+
+.custom-image {
+  max-width: 100%;
+  height: auto;
+}
