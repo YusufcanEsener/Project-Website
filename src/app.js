@@ -7,7 +7,7 @@ const User = require('./models/User');
 const app = express();
 
 // MongoDB bağlantısı
-connectDB();
+//connectDB();
 
 // Middleware
 app.use(express.json());
