@@ -240,3 +240,9 @@ a:hover {
 .background img {
     display: none;
 }
+.logo {
+    width: 100px; /* Logonun genişliği */
+    height: auto; /* Oranlarını korumak için otomatik yükseklik */
+    display: block; /* Logoyu düzgün hizalamak için */
+    margin: 0 auto; /* Ortalamak için */
+}
