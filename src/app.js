@@ -48,7 +48,10 @@ app.get('/programlar', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('programlar', { user });
 });
-
+app.get('/merak-edilenler', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('merak-edilenler', { user });
+});
 // Profil sayfası route'u
 app.get('/profile', requireAuth, async (req, res) => {
     try {

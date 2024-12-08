@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merak Edilenler</title>
+    <link rel="stylesheet" href="/css/iletisim.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/programlar.css">
+    <link rel="stylesheet" href="/css/merak.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <header class="header">
+        <a href="/">
+            <img src="images/logo.png" alt="Logo" class="logo">
+        </a>   
+        <nav class="navbar">
+            <a href="/#paketler" class="button">Uzaktan Eğitim Paketleri</a>
+            <a href="/programlar" class="button">programlar</a>
+            <a href="/merak-edilenler" class="button">Merak Edilenler</a>
+            <a href="/iletisim" class="button">İletişim</a>
+        </nav>
+        <% if (locals.user) { %>
+            <a href="/profile"><i class="bi bi-person" style="position:relative;left: 140px;font-size: 20px;"> Profilim</i></a>
+            <form action="/auth/logout" method="POST" style="display: inline;">
+                <button type="submit" style="background: none; border: none;">
+                    <i class="bi bi-box-arrow-right" style="position:relative;left: 5px;font-size: 20px;color: white;"> Çıkış</i>
+                </button>
+            </form>
+        <% } else { %>
+            <a href="/auth/login"><i class="bi bi-box-arrow-in-right" style="position:relative;left: 140px;font-size: 20px;"> Giriş Yap</i></a>
+            <a href="/auth/register"><i class="bi bi-person" style="position:relative;left: 5px;font-size: 20px;"> Kayıt Ol</i></a>
+        <% } %>
+    </header>
+    <main class="faq-container">
+        <h1 class="faq-title">Sıkça Sorulan Sorular</h1>
+        <div class="faq">
+            <div class="faq-item">
+                <h3 class="faq-question">1. Fitness'a başlamak için ideal yaş nedir?</h3>
+                <p class="faq-answer">
+                    Fitness'a başlamak için belirli bir yaş sınırı yoktur. Ancak, 14-16 yaş arası bireyler, temel antrenmanlarla güvenli bir şekilde başlayabilir.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">2. Hangi egzersiz kilo vermek için daha etkilidir?</h3>
+                <p class="faq-answer">
+                    Kardiyo egzersizleri (örneğin koşu, bisiklet) ve direnç antrenmanlarının birleşimi kilo vermek için en etkili yöntemdir.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">3. Protein tozu kullanmalı mıyım?</h3>
+                <p class="faq-answer">
+                    Protein tozu, yeterli protein alımını sağlayamıyorsanız bir destek olabilir. Ancak, öncelikle dengeli bir diyet tercih edilmelidir.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">4. Kas yapmak için ne kadar sürede sonuç alırım?</h3>
+                <p class="faq-answer">
+                    Kas yapımı kişiden kişiye değişir. Genellikle düzenli egzersiz ve doğru beslenmeyle 8-12 hafta içinde sonuçlar görülmeye başlanır.
+                </p>
+            </div>
+        </div>
+    </main>
+    
+    
+
+    <footer class="custom-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Hakkımda</h4>
+                <p>Her bireyin benzersiz olduğunu biliyor ve kişiye özel fitness planlarıyla hedeflerinize ulaşmanıza
+                    destek oluyorum. Bilimsel yaklaşımlar ve motivasyon dolu koçlukla, sağlıklı ve güçlü bir yaşam için
+                    yanınızdayım!</p>
+            </div>
+            <div class="footer-section">
+                <h4>Kurumsal</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/programlar">Programlar</a></li>
+                    <li><a href="/merak-edilenler">Merak Edilenler</a></li>
+                    <li><a href="/iletisim">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Paketler</h4>
+                <ul class="footer-links">
+                    <li><a href="/#paketler">6 Hafta</a></li>
+                    <li><a href="/#paketler">13 Hafta</a></li>
+                    <li><a href="/#paketler">26 Hafta</a></li>
+                    <li><a href="/#paketler">52 Hafta</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Benimle İletişime Geçin</h4>
+                <ul class="footer-social">
+                    <li><a href="tel:05435010212" class="btn">0543 501 0212</a></li>
+                    <li><a href="https://www.instagram.com/ates_astan/" class="btn">Instagram</a></li>
+                    <li><a href="atesastan1905gmail.com" class="btn">E-Mail</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <div id="ok">
+        <a href="#baslangic" style=" color: #fff;"><i class="fa-solid fa-arrow-up"></i></a>
+    </div>
+</body>
+</html>
