@@ -364,13 +364,29 @@ a.button:hover::before {
 
 
 .bio-container {
-    max-width: 600px;
+    display: flex; /* Yan yana yerleştirme */
+    align-items: flex-start; /* Üst hizalama */
+    max-width: 900px; /* Konteyner genişliği */
     margin: 50px auto;
     background: #ffffff;
-    padding: 20px 30px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: justify;
+    gap: 20px; /* Fotoğraf ve metin arasındaki boşluk */
+}
+
+.bio-image-container {
+    flex-shrink: 0; /* Görselin boyutunun sabit kalmasını sağlar */
+}
+
+.bio-image {
+    width: 300px; /* Görsel genişliği */
+    height: auto; /* Oranları koruyarak yüksekliği otomatik ayarlayın */
+    border-radius: 10px; /* Görselin köşelerini yuvarlat */
+}
+
+.bio-text-container {
+    flex: 1; /* Metin kutusunun kalan alanı kaplamasını sağlar */
 }
 
 .bio-title {
@@ -378,7 +394,6 @@ a.button:hover::before {
     font-weight: bold;
     color: #333333;
     margin-bottom: 20px;
-    text-align: center;
     border-bottom: 2px solid #ff6600;
     display: inline-block;
     padding-bottom: 5px;
@@ -388,8 +403,10 @@ a.button:hover::before {
     font-size: 16px;
     line-height: 1.8;
     color: #555555;
+    text-align: justify;
 }
 
 .bio-text strong {
     color: #ff6600;
 }
+
