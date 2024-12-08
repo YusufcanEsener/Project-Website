@@ -1,5 +1,5 @@
 /* Genel Stiller */
-body,
+
 html {
   margin: 0;
   padding: 0;
@@ -11,7 +11,27 @@ body {
   background: #1a0d40;
   background-size: cover;
 }
-
+/* Genel stil */
+.navbar-text {
+    padding: 5px 10px; 
+    font-size: 16px;
+  }
+  
+  /* Dizüstü bilgisayarlar için */
+  @media (min-width: 768px) {
+    .navbar-text {
+      font-size: 18px;
+    }
+  }
+  
+  /* Daha küçük ekranlar için (laptoplar, tabletler vb.) */
+  @media (max-width: 768px) {
+    .navbar-text {
+      font-size: 14px;
+      padding: 3px 5px;
+    }
+  }
+  
 .header {
   display: flex;
   justify-content: space-between;
