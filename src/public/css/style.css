@@ -11,25 +11,14 @@ body {
   background: #1a0d40;
   background-size: cover;
 }
-/* Genel stil */
-.navbar-text {
-    padding: 5px 10px; 
-    font-size: 16px;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
-  /* Dizüstü bilgisayarlar için */
-  @media (min-width: 768px) {
-    .navbar-text {
-      font-size: 18px;
-    }
-  }
-  
-  /* Daha küçük ekranlar için (laptoplar, tabletler vb.) */
-  @media (max-width: 768px) {
-    .navbar-text {
-      font-size: 14px;
-      padding: 3px 5px;
-    }
+  .navbar-item {
+    margin: 0 10px; /* Elemanlar arasına boşluk bırak */
   }
   
 .header {
