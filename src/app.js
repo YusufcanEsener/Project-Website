@@ -70,5 +70,5 @@ app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Sunucu ${PORT} portunda çalışıyor`);
+    console.log(`Sunucu http://localhost:${PORT} portunda çalışıyor`);
 });
