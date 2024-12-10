@@ -7,7 +7,7 @@ const User = require('./models/User');
 const app = express();
 
 // MongoDB bağlantısı
-//connectDB();
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -47,6 +47,10 @@ const requireAuth = (req, res, next) => {
 app.get('/programlar', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('programlar', { user });
+});
+app.get('/odeme', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme', { user });
 });
 app.get('/merak-edilenler', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;

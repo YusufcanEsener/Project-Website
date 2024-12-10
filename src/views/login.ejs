@@ -28,14 +28,14 @@
                     </div>
                     <div class="signin-form">
                         <h2 class="form-title">Giriş</h2>
-                        <form method="POST" class="register-form" id="login-form">
+                        <form method="POST" action="/auth/login" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="email" id="email" placeholder="Mail Adresiniz"/>
+                                <input type="text" name="email" id="email" placeholder="Mail Adresiniz" required/>
                             </div>
                             <div class="form-group">
                                 <label for="sifre"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="sifre" id="sifre" placeholder="Şifreniz"/>
+                                <input type="password" name="sifre" id="sifre" placeholder="Şifreniz" required/>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />

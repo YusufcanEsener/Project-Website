@@ -63,6 +63,12 @@ a:hover {
   font-size: 2rem;
   margin: 10px 0;
 }
+.logo {
+  width: 100px; /* Logonun genişliği */
+  height: auto; /* Oranlarını korumak için otomatik yükseklik */
+  display: block; /* Logoyu düzgün hizalamak için */
+  margin: 0 auto; /* Ortalamak için */
+}
 
 .content p {
   font-size: 1.2rem;
@@ -113,7 +119,7 @@ a:hover {
   display: none;
 }
 
-.button {
+.button1 {
   padding: 1em 2em;
   border: none;
   border-radius: 5px;
@@ -131,14 +137,14 @@ a:hover {
   position: relative;
 }
 
-button:hover {
+.button1:hover {
   color: #ffffff;
   transform: scale(1.1);
   outline: 2px solid #70bdca;
   box-shadow: 4px 5px 17px -4px #268391;
 }
 
-button::before {
+.button1::before {
   content: "";
   position: absolute;
   left: -50px;
@@ -151,7 +157,7 @@ button::before {
   transition: width 1000ms;
 }
 
-button:hover::before {
+.button1:hover::before {
   width: 150%;
 }
 .paketler-section {
@@ -410,3 +416,32 @@ a.button:hover::before {
     color: #ff6600;
 }
 
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* İkon ve metin arasındaki boşluk */
+  padding: 10px 20px;
+  background-color: #e63946; /* Kırmızı tonunda bir arka plan */
+  color: white; /* Beyaz yazı rengi */
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.logout-button i {
+  font-size: 18px; /* İkon boyutu */
+}
+
+.logout-button:hover {
+  background-color: #d62828; /* Daha koyu kırmızı bir ton */
+  transform: scale(1.05); /* Hover sırasında hafif büyütme efekti */
+}
+
+.logout-button:active {
+  background-color: #b71c1c; /* Daha koyu bir kırmızı */
+  transform: scale(0.98); /* Tıklanırken hafif küçülme efekti */
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil - Arda Build</title>
+    <title>Profil - Ateş Astan</title>
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .profile-container {
@@ -39,16 +39,18 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <i class="fa-solid fa-dumbbell"></i>
-        </div>
+    <header class="header" id="baslangic">
+        <a href="/">
+            <img src="images/logo.png" alt="Logo" class="logo" >
+        </a>
         <nav class="navbar">
-            <a href="/" class="button">Ana Sayfa</a>
+            <a href="#paketler" class="button">Uzaktan Eğitim Paketleri</a>
+            <a href="/programlar" class="button">Programlar</a>
+            <a href="/merak-edilenler" class="button">Merak Edilenler</a>
             <a href="/iletisim" class="button">İletişim</a>
         </nav>
         <form action="/auth/logout" method="POST" style="margin-left: auto;">
-            <button type="submit" class="logout-btn">Çıkış Yap</button>
+            <button type="submit" class="logout-button">Çıkış Yap</button>
         </form>
     </header>
 
@@ -65,11 +67,49 @@
             </div>
             <div class="profile-box">
                 <h2>Program Bilgileri</h2>
-                <p>Aktif Paket: 6 Haftalık Program</p> <!-- Veri Tabanı bağlanınca dinamik hale getirilecek -->
-                <p>Başlangıç: 01.04.2024</p> <!-- Veri Tabanı bağlanınca dinamik hale getirilecek -->
-                <p>Bitiş: 15.05.2024</p> <!-- Veri Tabanı bağlanınca dinamik hale getirilecek -->
+                <p>Aktif Paket: 6 Haftalık Program</p>
+                <p>Başlangıç: <span id="uyelik-baslangic"></span></p>
+                <p>Bitiş: <span id="uyelik-bitis"></span></p>
+            </div>
+            <div class="profile-box">
+                <h2>Yeni Üyelik Satın Al</h2>
+                <a href="/odeme" class="custom-cta-button">Üyelik Satın Al</a>
             </div>
         </div>
     </div>
+
+    <script>
+        // MongoDB tarih formatı (örnek)
+        const mongoDate = "<%= user?.uyelikAt %>";  // Üyelik başlangıcını burada kullanacaksınız
+        const mongoDate2 = "<%= user?.uyelikBitis %>"; 
+
+        // Ayların Türkçeye çevrilmesi
+        const months = {
+            "Jan": "Ocak", "Feb": "Şubat", "Mar": "Mart", "Apr": "Nisan", "May": "Mayıs", "Jun": "Haziran",
+            "Jul": "Temmuz", "Aug": "Ağustos", "Sep": "Eylül", "Oct": "Ekim", "Nov": "Kasım", "Dec": "Aralık"
+        };
+
+        const date = new Date(mongoDate);
+        const day = date.getDate();
+        const month = months[date.toString().split(' ')[1]]; // Ay ismini alıyoruz
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        const date2 = new Date(mongoDate2);
+        const day2 = date2.getDate();
+        const month2 = months[date2.toString().split(' ')[1]]; // Ay ismini alıyoruz
+        const year2 = date2.getFullYear();
+        const hours2 = date2.getHours();
+        const minutes2 = date2.getMinutes();
+
+        // Kısaltılmış tarih formatı: 10 Aralık 2024 23:59
+        const formattedDate = `${day} ${month} ${year} ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        const formattedDate2 = `${day2} ${month2} ${year2} ${hours2}:${minutes2 < 10 ? '0' + minutes2 : minutes2}`;
+
+        // HTML'e yazdırma
+        document.getElementById("uyelik-baslangic").innerText = formattedDate;
+        document.getElementById("uyelik-bitis").innerText = formattedDate2;
+    </script>
 </body>
 </html>
