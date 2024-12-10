@@ -7,7 +7,7 @@ const User = require('./models/User');
 const app = express();
 
 // MongoDB bağlantısı
-//connectDB();
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -48,6 +48,10 @@ app.get('/programlar', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('programlar', { user });
 });
+app.get('/odeme', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme', { user });
+});
 app.get('/merak-edilenler', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('merak-edilenler', { user });
@@ -70,5 +74,5 @@ app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Sunucu ${PORT} portunda çalışıyor`);
+    console.log(`Sunucu http://localhost:${PORT} portunda çalışıyor`);
 });

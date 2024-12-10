@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
     <title>Kayıt</title>
 
     <!-- Font Icon -->
@@ -25,47 +24,38 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Kayıt Ol</h2>
-                        <form method="POST" class="register-form" id="register-form">
+                        <form method="POST" action="/auth/register" class="register-form" id="register-form">
                             <div class="form-group">
-                                <label for="isim"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="isim" id="isim" placeholder="İsim"/>
+                                <label for="ad"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="ad" id="ad" placeholder="Adınız" required />
                             </div>
                             <div class="form-group">
-                                <label for="s_isim"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="s_isim" id="s_isim" placeholder="Soyisim"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="yas"><i class="zmdi zmdi-email"></i></label>
-                                <input type="text" name="yas" id="yas" placeholder="Yaşınız"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="numara"><i class="zmdi zmdi-email"></i></label>
-                                <input type="text" name="numara" id="numara" placeholder="Numaranız"/>
+                                <label for="soyad"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="soyad" id="soyad" placeholder="Soyadınız" required />
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="text" name="email" id="email" placeholder="Mailiniz"/>
+                                <input type="email" name="email" id="email" placeholder="E-posta" required />
                             </div>
                             <div class="form-group">
                                 <label for="sifre"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="sifre" id="sifre" placeholder="Şifreniz"/>
+                                <input type="password" name="sifre" id="sifre" placeholder="Şifreniz" required />
                             </div>
                             <div class="form-group">
                                 <label for="tekrarsifre"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="tekrarsifre" id="tekrarsifre" placeholder="Tekrar Şifreniz"/>
+                                <input type="password" name="tekrarsifre" id="tekrarsifre" placeholder="Şifrenizi Tekrar Girin" required />
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>Tüm Şartları Kabul Ediyorum.  <a href="#" class="term-service">Terms of service</a></label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Kayıt Ol"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Kayıt Ol" />
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
                         <figure><img src="/images/yeni1.png" alt="sign up image"></figure>
-                        
                     </div>
                 </div>
             </div>

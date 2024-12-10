@@ -13,37 +13,84 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const { ad, soyad, email, sifre } = req.body;
+        const { ad, soyad, email, sifre, tekrarsifre } = req.body;
+
+        // Şifrelerin eşleştiğini kontrol et
+        if (sifre !== tekrarsifre) {
+            return res.status(400).send('Şifreler eşleşmiyor');
+        }
+
+    
+
+        // Yeni kullanıcı oluştur
         const user = new User({ ad, soyad, email, sifre });
         await user.save();
+
         res.redirect('/auth/login');
-    } catch (err) {
-        res.status(400).send('Kayıt işlemi başarısız');
+    }  catch (err) {
+        console.error('Kayıt işlemi başarısız:', err.message);
+        res.status(400).send(`Kayıt işlemi başarısız: ${err.message}`);
     }
 });
+router.post('/update-membership', async (req, res) => {
+    try {
+        const userId = req.session.userId; // Oturumdaki kullanıcı ID'si
+
+        if (!userId) {
+            return res.status(401).send('Kullanıcı giriş yapmamış');
+        }
+
+        // Kullanıcıyı bul ve üyelik değerini artır
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('Kullanıcı bulunamadı');
+        }
+
+        user.uyelik = (user.uyelik || 0) + 1; // Mevcut değer yoksa 0'dan başla
+        const currentTime = Date.now(); // Şu anki tarihi alıyoruz
+        user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
+
+        // 6 hafta sonrası tarihi hesapla
+        const weeksToAdd = 6;
+        const millisecondsInAWeek = 7 * 24 * 60 * 60 * 1000; // Bir hafta, milisaniye cinsinden
+        user.uyelikBitis = new Date(currentTime + weeksToAdd * millisecondsInAWeek); // 6 hafta sonrası
+
+        await user.save();
+
+        res.json({ success: true, message: 'Üyelik başarıyla güncellendi.' });
+    } catch (err) {
+        console.error('Üyelik güncelleme hatası:', err.message);
+        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
+});
+
 
 router.post('/login', async (req, res) => {
     try {
         const { email, sifre } = req.body;
+
+        // Kullanıcıyı email ile bul
         const user = await User.findOne({ email });
         
         if (!user) {
             return res.status(400).send('Kullanıcı bulunamadı');
         }
 
-        const isMatch = await bcrypt.compare(sifre, user.sifre);
-        if (!isMatch) {
-            return res.status(400).send('Geçersiz şifre');
+        // Girilen şifreyi kontrol et
+        if (user.sifre !== sifre) {
+            return res.status(400).send('Şifre yanlış');
         }
 
+        // Oturum oluştur ve ana sayfaya yönlendir
         req.session.userId = user._id;
         res.redirect('/');
     } catch (err) {
+        console.error('Giriş işlemi hatası:', err.message);
         res.status(400).send('Giriş başarısız');
     }
 });
 
-// Mevcut auth.js dosyasına ekleyin
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -52,4 +99,5 @@ router.post('/logout', (req, res) => {
         res.redirect('/');
     });
 });
+
 module.exports = router;
