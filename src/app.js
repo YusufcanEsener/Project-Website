@@ -56,6 +56,18 @@ app.get('/merak-edilenler', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('merak-edilenler', { user });
 });
+app.get('/odeme2', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme2', { user });
+});
+app.get('/odeme3', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme3', { user });
+});
+app.get('/odeme4', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme4', { user });
+});
 // Profil sayfası route'u
 app.get('/profile', requireAuth, async (req, res) => {
     try {
@@ -71,6 +83,7 @@ app.get('/profile', requireAuth, async (req, res) => {
 
 // Auth routes
 app.use('/auth', require('./routes/auth'));
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

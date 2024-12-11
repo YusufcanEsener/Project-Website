@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Ateş Astan</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/profile.css">
     <style>
         .profile-container {
             max-width: 800px;
@@ -44,7 +45,7 @@
             <img src="images/logo.png" alt="Logo" class="logo" >
         </a>
         <nav class="navbar">
-            <a href="#paketler" class="button">Uzaktan Eğitim Paketleri</a>
+            <a href="/#paketler" class="button">Uzaktan Eğitim Paketleri</a>
             <a href="/programlar" class="button">Programlar</a>
             <a href="/merak-edilenler" class="button">Merak Edilenler</a>
             <a href="/iletisim" class="button">İletişim</a>
@@ -64,24 +65,46 @@
                 <p>Ad: <%= user?.ad %></p>
                 <p>Soyad: <%= user?.soyad %></p>
                 <p>Email: <%= user?.email %></p>
+                <p>Kayıt Olma Tarihi: <span id="uyelik-kurulus"></span></p>
             </div>
             <div class="profile-box">
                 <h2>Program Bilgileri</h2>
-                <p>Aktif Paket: 6 Haftalık Program</p>
+                <p>Aktif Paket: 
+                    <% if (user?.uyelik === 1) { %>
+                        6 Haftalık Program
+                    <% } else if (user?.uyelik === 2) { %>
+                       13 Haftalık Program
+                    <% } else if (user?.uyelik === 3) { %>
+                        26 Haftalık Program
+                    <% } 
+                        else if (user?.uyelik === 4) { %>
+                        52 Haftalık Program
+                    <% }else { %>
+                        Henüz bir paketiniz yok.
+                    <% } %>
+                </p>
+
                 <p>Başlangıç: <span id="uyelik-baslangic"></span></p>
                 <p>Bitiş: <span id="uyelik-bitis"></span></p>
             </div>
             <div class="profile-box">
                 <h2>Yeni Üyelik Satın Al</h2>
-                <a href="/odeme" class="custom-cta-button">Üyelik Satın Al</a>
+                &nbsp;&nbsp;6 Hafta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1029₺  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/odeme" class="custom-cta-button">Satın Al</a><br>
+                13 Hafta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1290₺ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/odeme2" class="custom-cta-button">Satın Al</a><br>
+                26 Hafta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1850₺  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/odeme3" class="custom-cta-button">Satın Al</a><br>
+                52 Hafta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2840₺ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/odeme4" class="custom-cta-button">Satın Al</a><br>
             </div>
         </div>
+    </div>
+    <div class="message-button-container">
+        <a href="/auth/messages/send" class="message-button">Canlı Sohbet Kanalı</a>
     </div>
 
     <script>
         // MongoDB tarih formatı (örnek)
         const mongoDate = "<%= user?.uyelikAt %>";  // Üyelik başlangıcını burada kullanacaksınız
         const mongoDate2 = "<%= user?.uyelikBitis %>"; 
+        const mongoDate3 = "<%= user?.createdAt %>"; 
 
         // Ayların Türkçeye çevrilmesi
         const months = {
@@ -103,13 +126,22 @@
         const hours2 = date2.getHours();
         const minutes2 = date2.getMinutes();
 
+        const date3 = new Date(mongoDate3);
+        const day3 = date3.getDate();
+        const month3 = months[date3.toString().split(' ')[1]]; // Ay ismini alıyoruz
+        const year3 = date3.getFullYear();
+        const hours3 = date3.getHours();
+        const minutes3 = date3.getMinutes();
+
         // Kısaltılmış tarih formatı: 10 Aralık 2024 23:59
         const formattedDate = `${day} ${month} ${year} ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
         const formattedDate2 = `${day2} ${month2} ${year2} ${hours2}:${minutes2 < 10 ? '0' + minutes2 : minutes2}`;
+        const formattedDate3 = `${day3} ${month3} ${year3} ${hours3}:${minutes3 < 10 ? '0' + minutes3 : minutes3}`;
 
         // HTML'e yazdırma
         document.getElementById("uyelik-baslangic").innerText = formattedDate;
         document.getElementById("uyelik-bitis").innerText = formattedDate2;
+        document.getElementById("uyelik-kurulus").innerText = formattedDate3;
     </script>
 </body>
 </html>

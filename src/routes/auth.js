@@ -32,6 +32,103 @@ router.post('/register', async (req, res) => {
         res.status(400).send(`Kayıt işlemi başarısız: ${err.message}`);
     }
 });
+router.post('/update-membership4', async (req, res) => {
+    try {
+        const userId = req.session.userId; // Oturumdaki kullanıcı ID'si
+
+        if (!userId) {
+            return res.status(401).send('Kullanıcı giriş yapmamış');
+        }
+
+        // Kullanıcıyı bul ve üyelik değerini artır
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('Kullanıcı bulunamadı');
+        }
+
+        user.uyelik =  4; // Mevcut değer yoksa 0'dan başla
+        const currentTime = Date.now(); // Şu anki tarihi alıyoruz
+        user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
+
+        // 6 hafta sonrası tarihi hesapla
+        const weeksToAdd = 52;
+        const millisecondsInAWeek = 7 * 24 * 60 * 60 * 1000; // Bir hafta, milisaniye cinsinden
+        user.uyelikBitis = new Date(currentTime + weeksToAdd * millisecondsInAWeek); // 6 hafta sonrası
+
+        await user.save();
+
+        res.json({ success: true, message: 'Üyelik başarıyla güncellendi.' });
+    } catch (err) {
+        console.error('Üyelik güncelleme hatası:', err.message);
+        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
+});
+router.post('/update-membership2', async (req, res) => {
+    try {
+        const userId = req.session.userId; // Oturumdaki kullanıcı ID'si
+
+        if (!userId) {
+            return res.status(401).send('Kullanıcı giriş yapmamış');
+        }
+
+        // Kullanıcıyı bul ve üyelik değerini artır
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('Kullanıcı bulunamadı');
+        }
+
+        user.uyelik =  2; // Mevcut değer yoksa 0'dan başla
+        const currentTime = Date.now(); // Şu anki tarihi alıyoruz
+        user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
+
+        // 6 hafta sonrası tarihi hesapla
+        const weeksToAdd = 13;
+        const millisecondsInAWeek = 7 * 24 * 60 * 60 * 1000; // Bir hafta, milisaniye cinsinden
+        user.uyelikBitis = new Date(currentTime + weeksToAdd * millisecondsInAWeek); // 6 hafta sonrası
+
+        await user.save();
+
+        res.json({ success: true, message: 'Üyelik başarıyla güncellendi.' });
+    } catch (err) {
+        console.error('Üyelik güncelleme hatası:', err.message);
+        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
+});
+router.post('/update-membership3', async (req, res) => {
+    try {
+        const userId = req.session.userId; // Oturumdaki kullanıcı ID'si
+
+        if (!userId) {
+            return res.status(401).send('Kullanıcı giriş yapmamış');
+        }
+
+        // Kullanıcıyı bul ve üyelik değerini artır
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('Kullanıcı bulunamadı');
+        }
+
+        user.uyelik = 3; // Mevcut değer yoksa 0'dan başla
+        const currentTime = Date.now(); // Şu anki tarihi alıyoruz
+        user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
+
+        // 6 hafta sonrası tarihi hesapla
+        const weeksToAdd = 26;
+        const millisecondsInAWeek = 7 * 24 * 60 * 60 * 1000; // Bir hafta, milisaniye cinsinden
+        user.uyelikBitis = new Date(currentTime + weeksToAdd * millisecondsInAWeek); // 6 hafta sonrası
+
+        await user.save();
+
+        res.json({ success: true, message: 'Üyelik başarıyla güncellendi.' });
+    } catch (err) {
+        console.error('Üyelik güncelleme hatası:', err.message);
+        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
+});
+
 router.post('/update-membership', async (req, res) => {
     try {
         const userId = req.session.userId; // Oturumdaki kullanıcı ID'si
@@ -47,7 +144,7 @@ router.post('/update-membership', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik = (user.uyelik || 0) + 1; // Mevcut değer yoksa 0'dan başla
+        user.uyelik = 1; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 

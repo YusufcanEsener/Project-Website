@@ -1,0 +1,25 @@
+.message-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.message-button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    padding: 16px 28px; /* Buton boyutunu büyütmek için padding artırıldı */
+    font-size: 18px; /* Yazı boyutunu artırdık */
+    border-radius: 10px; /* Daha yuvarlak bir görünüm için */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Butona daha belirgin bir gölge eklendi */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Hover animasyonu için */
+}
+
+.message-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05); /* Hover durumunda buton hafifçe büyür */
+}
