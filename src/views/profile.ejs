@@ -84,8 +84,16 @@
                     <% } %>
                 </p>
 
-                <p>Başlangıç: <span id="uyelik-baslangic"></span></p>
-                <p>Bitiş: <span id="uyelik-bitis"></span></p>
+                <p>Başlangıç: <% if (user?.uyelik === 0) { %>
+                    -
+                    <% }else { %>
+                    <span id="uyelik-baslangic"></span>
+                <% } %></p>
+                <p>Bitiş:<% if (user?.uyelik === 0) { %>
+                    -
+                    <% }else { %>
+                        <span id="uyelik-bitis"></span>
+                <% } %> </p>
             </div>
             <div class="profile-box">
                 <h2>Yeni Üyelik Satın Al</h2>

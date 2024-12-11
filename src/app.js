@@ -86,6 +86,22 @@ app.get('/programlar', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('programlar', { user });
 });
+app.get('/odeme', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme', { user });
+});
+app.get('/odeme2', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme2', { user });
+});
+app.get('/odeme3', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme3', { user });
+});
+app.get('/odeme4', async (req, res) => {
+    const user = req.session.userId ? await User.findById(req.session.userId) : null;
+    res.render('odeme4', { user });
+});
 
 // Profil sayfası middleware
 const requireAuth = (req, res, next) => {
