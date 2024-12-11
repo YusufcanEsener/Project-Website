@@ -128,6 +128,25 @@ router.post('/update-membership3', async (req, res) => {
         res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
     }
 });
+// Kullanıcının oturum bilgisini istemciye sağlayan endpoint
+router.get('/current-user', (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ message: 'Kullanıcı giriş yapmamış' });
+    }
+
+    User.findById(req.session.userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
+            }
+            res.json({ ad: user.ad, soyad: user.soyad });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Bir hata oluştu' });
+        });
+});
+
 
 router.post('/update-membership', async (req, res) => {
     try {
