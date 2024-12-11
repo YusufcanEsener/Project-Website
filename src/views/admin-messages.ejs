@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelen Mesajlar</title>
+    <link rel="stylesheet" href="/styles/admin-messages.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gelen Mesajlar</h1>
+        <% if (messages.length > 0) { %>
+            <ul class="message-list">
+                <% messages.forEach((message) => { %>
+                    <li class="message-item">
+                        <div class="message-header">
+                            <span class="sender-name"><%= message.sender.ad %> <%= message.sender.soyad %></span>
+                            <span class="message-time"><%= new Date(message.timestamp).toLocaleString() %></span>
+                        </div>
+                        <div class="message-content">
+                            <p><%= message.content %></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p class="no-messages">Hiç mesaj yok.</p>
+        <% } %>
+    </div>
+</body>
+</html>
