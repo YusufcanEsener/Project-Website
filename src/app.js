@@ -142,7 +142,7 @@ app.post('/api/messages', async (req, res) => {
 });
 app.get('/api/messages', async (req, res) => {
     try {
-        const messages = await Message.find().sort({ createdAt: 1});  // Mesajları tarih sırasına göre al
+        const messages = await Message.find().sort({ createdAt: 1 });  // Mesajları tarih sırasına göre al
         res.status(200).json(messages);  // Mesajları döndür
     } catch (err) {
         res.status(500).json({ error: 'Mesajlar alınamadı', message: err.message });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,20 +14,24 @@
             background: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
         }
+
         .profile-header {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .profile-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
+
         .profile-box {
             background: #2b3245;
             padding: 20px;
             border-radius: 10px;
         }
+
         .logout-btn {
             background: #ff6f61;
             color: white;
@@ -36,6 +41,7 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
         .card-form {
             background: #ffffff;
             padding: 20px 30px;
@@ -47,20 +53,24 @@
             left: 40%;
             top: 35%;
         }
+
         .card-form h2 {
             margin-bottom: 20px;
             font-size: 24px;
             color: #333;
             text-align: center;
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         .form-group label {
             display: block;
             margin-bottom: 5px;
             color: #555;
         }
+
         .form-group input {
             width: 100%;
             padding: 10px;
@@ -68,6 +78,7 @@
             border-radius: 4px;
             font-size: 14px;
         }
+
         .submit-btn {
             width: 100%;
             padding: 10px;
@@ -79,16 +90,18 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .submit-btn:hover {
             background-color: #45a049;
         }
     </style>
     </style>
 </head>
+
 <body>
     <header class="header" id="baslangic">
         <a href="/">
-            <img src="images/logo.png" alt="Logo" class="logo" >
+            <img src="images/logo.png" alt="Logo" class="logo">
         </a>
         <nav class="navbar">
             <a href="#paketler" class="button">Uzaktan Eğitim Paketleri</a>
@@ -105,7 +118,8 @@
         <form id="payment-form" onsubmit="handlePayment(event)">
             <div class="form-group">
                 <label for="card-number">Kart Numarası</label>
-                <input type="text" id="card-number" name="card-number" maxlength="16" placeholder="1234 5678 9012 3456" required>
+                <input type="text" id="card-number" name="card-number" maxlength="16" placeholder="1234 5678 9012 3456"
+                    required>
             </div>
             <div class="form-group">
                 <label for="card-holder">Kart Sahibinin Adı</label>
@@ -124,40 +138,37 @@
     </div>
     <script>
         async function handlePayment(event) {
-    event.preventDefault(); // Formun varsayılan gönderimini engelle
+            event.preventDefault(); // Formun varsayılan gönderimini engelle
 
-    // Ödeme işlemini simüle edin
-    alert('Ödeme başarılı!');
+            // Ödeme işlemini simüle edin
+            alert('Ödeme başarılı!');
 
-    try {
-        // Backend'e üyelik güncelleme isteği gönder
-        const response = await fetch('/auth/update-membership2', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include', // Oturum çerezlerini iletmek için
-        });
+            try {
+                // Backend'e üyelik güncelleme isteği gönder
+                const response = await fetch('/auth/update-membership2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // Oturum çerezlerini iletmek için
+                });
 
-        if (response.ok) {
-            const data = await response.json();
-            alert(data.message); // Backend'den gelen başarı mesajını göster
-            window.location.href = '/profile'; // Profil sayfasına yönlendir
-        } else {
-            const error = await response.text();
-            alert(`Hata: ${error}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data.message); // Backend'den gelen başarı mesajını göster
+                    window.location.href = '/profile'; // Profil sayfasına yönlendir
+                } else {
+                    const error = await response.text();
+                    alert(`Hata: ${error}`);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
         }
-    } catch (error) {
-        console.error('Hata:', error);
-        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
-    }
-}
 
 
     </script>
 </body>
+
 </html>
-
-
-
-
