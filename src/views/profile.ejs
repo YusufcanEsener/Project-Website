@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Ateş Astan</title>
-    <link rel="stylesheet" href="/css/style.css">,
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/profile.css">
     <style>
         .profile-container {
@@ -65,10 +65,25 @@
                 <p>Ad: <%= user?.ad %></p>
                 <p>Soyad: <%= user?.soyad %></p>
                 <p>Email: <%= user?.email %></p>
+                <p>Kayıt Olma Tarihi: <span id="uyelik-kurulus"></span></p>
             </div>
             <div class="profile-box">
                 <h2>Program Bilgileri</h2>
-                <p>Aktif Paket: 6 Haftalık Program</p>
+                <p>Aktif Paket: 
+                    <% if (user?.uyelik === 1) { %>
+                        6 Haftalık Program
+                    <% } else if (user?.uyelik === 2) { %>
+                       13 Haftalık Program
+                    <% } else if (user?.uyelik === 3) { %>
+                        26 Haftalık Program
+                    <% } 
+                        else if (user?.uyelik === 4) { %>
+                        52 Haftalık Program
+                    <% }else { %>
+                        Henüz bir paketiniz yok.
+                    <% } %>
+                </p>
+
                 <p>Başlangıç: <span id="uyelik-baslangic"></span></p>
                 <p>Bitiş: <span id="uyelik-bitis"></span></p>
             </div>
@@ -89,6 +104,7 @@
         // MongoDB tarih formatı (örnek)
         const mongoDate = "<%= user?.uyelikAt %>";  // Üyelik başlangıcını burada kullanacaksınız
         const mongoDate2 = "<%= user?.uyelikBitis %>"; 
+        const mongoDate3 = "<%= user?.createdAt %>"; 
 
         // Ayların Türkçeye çevrilmesi
         const months = {
@@ -110,13 +126,22 @@
         const hours2 = date2.getHours();
         const minutes2 = date2.getMinutes();
 
+        const date3 = new Date(mongoDate3);
+        const day3 = date3.getDate();
+        const month3 = months[date3.toString().split(' ')[1]]; // Ay ismini alıyoruz
+        const year3 = date3.getFullYear();
+        const hours3 = date3.getHours();
+        const minutes3 = date3.getMinutes();
+
         // Kısaltılmış tarih formatı: 10 Aralık 2024 23:59
         const formattedDate = `${day} ${month} ${year} ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
         const formattedDate2 = `${day2} ${month2} ${year2} ${hours2}:${minutes2 < 10 ? '0' + minutes2 : minutes2}`;
+        const formattedDate3 = `${day3} ${month3} ${year3} ${hours3}:${minutes3 < 10 ? '0' + minutes3 : minutes3}`;
 
         // HTML'e yazdırma
         document.getElementById("uyelik-baslangic").innerText = formattedDate;
         document.getElementById("uyelik-bitis").innerText = formattedDate2;
+        document.getElementById("uyelik-kurulus").innerText = formattedDate3;
     </script>
 </body>
 </html>

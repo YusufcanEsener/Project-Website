@@ -56,10 +56,6 @@ app.get('/merak-edilenler', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('merak-edilenler', { user });
 });
-app.get('/admin-messages', async (req, res) => {
-    const user = req.session.userId ? await User.findById(req.session.userId) : null;
-    res.render('admin-messages', { user });
-});
 app.get('/odeme2', async (req, res) => {
     const user = req.session.userId ? await User.findById(req.session.userId) : null;
     res.render('odeme2', { user });

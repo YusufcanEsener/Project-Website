@@ -47,7 +47,7 @@ router.post('/update-membership4', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik = (user.uyelik || 0) + 4; // Mevcut değer yoksa 0'dan başla
+        user.uyelik =  4; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
@@ -79,7 +79,7 @@ router.post('/update-membership2', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik = (user.uyelik || 0) + 2; // Mevcut değer yoksa 0'dan başla
+        user.uyelik =  2; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
@@ -111,7 +111,7 @@ router.post('/update-membership3', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik = (user.uyelik || 0) + 3; // Mevcut değer yoksa 0'dan başla
+        user.uyelik = 3; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
@@ -125,52 +125,6 @@ router.post('/update-membership3', async (req, res) => {
         res.json({ success: true, message: 'Üyelik başarıyla güncellendi.' });
     } catch (err) {
         console.error('Üyelik güncelleme hatası:', err.message);
-        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
-    }
-});
-const Message = require('../models/Message');
-
-router.post('/send-message', async (req, res) => {
-    try {
-        const { content } = req.body;
-
-        if (!req.session.userId) {
-            return res.status(401).send('Kullanıcı giriş yapmamış');
-        }
-
-        // Kullanıcı bilgilerini al
-        const sender = req.session.userId;
-        const recipient = 'admin'; // Sabit olarak "admin" kullanıcısı
-
-        // Mesaj oluştur ve kaydet
-        const message = new Message({ sender, recipient, content });
-        await message.save();
-
-        res.json({ success: true, message: 'Mesaj başarıyla gönderildi' });
-    } catch (err) {
-        console.error('Mesaj gönderme hatası:', err.message);
-        res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
-    }
-});
-router.get('/messages', async (req, res) => {
-    try {
-        const userId = req.session.userId;
-
-        // Giriş yapmış kullanıcının admin olduğunu kontrol et
-        const user = await User.findById(userId);
-
-        if (!user || user.email !== 'admin@example.com') {
-            return res.status(403).send('Bu sayfaya erişim yetkiniz yok');
-        }
-
-        // Admin'e gönderilen mesajları al
-        const messages = await Message.find({ recipient: 'admin' })
-            .populate('sender', 'ad soyad email')
-            .sort({ timestamp: -1 });
-
-        res.render('admin-messages', { messages });
-    } catch (err) {
-        console.error('Mesaj görüntüleme hatası:', err.message);
         res.status(500).send('Bir hata oluştu. Lütfen tekrar deneyin.');
     }
 });
@@ -190,7 +144,7 @@ router.post('/update-membership', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik = (user.uyelik || 0) + 1; // Mevcut değer yoksa 0'dan başla
+        user.uyelik = 1; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
