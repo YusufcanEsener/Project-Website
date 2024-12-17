@@ -78,9 +78,12 @@
                 </div>
             </div>
         </div>
-        <div id="ok">
-            <a href="#baslangic" style=" color: #ffffff;"><i class="fa-solid fa-arrow-up"></i></a>
+        <div class="floating-buttons">
+            <a href="<%= locals.user ? (user.uyelikBitisTarihi && new Date(user.uyelikBitisTarihi) > new Date() ? '/mesaj' : '/profile') : '/auth/login' %>" class="chat-button">
+                <i class="bi bi-chat-fill"></i>
+            </a>
         </div>
+        <a href="#baslangic" id="ok"><i class="fa-solid fa-arrow-up"></i></a>
 
     </main>
     <div class="bio-container">

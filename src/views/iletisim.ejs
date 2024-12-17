@@ -115,8 +115,11 @@
             <p>&copy; 2024 Your Company. All Rights Reserved.</p>
         </div>
     </footer>
-    <div id="ok">
-        <a href="/iletisim" style=" color: #fff;"><i class="fa-solid fa-arrow-up"></i></a>
+    <div class="floating-buttons">
+        <a href="<%= locals.user ? (user.uyelikBitisTarihi && new Date(user.uyelikBitisTarihi) > new Date() ? '/mesaj' : '/profile') : '/auth/login' %>" class="chat-button">
+            <i class="bi bi-chat-fill"></i>
+        </a>
     </div>
+    <a href="/iletisim" id="ok"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>
