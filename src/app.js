@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const favicon = require('serve-favicon');
 const path = require('path');
 const connectDB = require('./config/db');
 const User = require('./models/User');
@@ -14,41 +15,61 @@ const server = app.listen(3001, () => {
 // MongoDB bağlantısı
 connectDB();
 
+// Middleware'leri ekle
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(favicon(path.join(__dirname, 'public', 'logo.ico')));
+
 // Mesaj API'sini dahil et
 const messageRoutes = require('./api/messages'); // api/messages.js dosyanızı burada dahil edin
 app.use('/api/messages', messageRoutes);
 // Socket.io yapılandırması
-const io = socket(server);
+const io = socket(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 io.on('connection', (socket) => {
     console.log(`${socket.id} bağlandı`);
 
-    // Mesaj gönderildiğinde tüm bağlı kullanıcılara ilet
-    socket.on('chat', async (data) => {
-        // Veritabanına mesajı kaydet
-        try {
-            const newMessage = new Message({
-                sender: data.sender,
-                message: data.message,
-            });
-            await newMessage.save();  // Veritabanına kaydet
-
-            // Mesajı tüm kullanıcılara ilet
-            io.sockets.emit('chat', newMessage);
-        } catch (err) {
-            console.error('Mesaj kaydedilemedi:', err);
+    socket.on('join-room', (room) => {
+        if (room) {
+            socket.join(room);
+            console.log(`${socket.id} ${room} odasına katıldı`);
         }
     });
 
-    // Kullanıcı yazarken bildirim göndermek için
+    socket.on('chat', async (data) => {
+        try {
+            if (!data.room) {
+                console.error('Room değeri eksik:', data);
+                return;
+            }
+            
+            // Mesajı odadaki tüm kullanıcılara gönder
+            io.in(data.room).emit('chat', {
+                sender: data.sender,
+                message: data.message,
+                room: data.room,
+                createdAt: data.createdAt || new Date()
+            });
+            
+        } catch (err) {
+            console.error('Mesaj gönderilemedi:', err);
+        }
+    });
+
     socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', data);
+        if (data.room) {
+            socket.to(data.room).emit('typing', data.sender);
+        }
     });
 });
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -151,6 +172,74 @@ app.get('/api/messages', async (req, res) => {
 
 // Auth routes
 app.use('/auth', require('./routes/auth'));
+
+// Admin kontrolü için middleware
+const requireAdmin = async (req, res, next) => {
+    if (!req.session.userId) {
+        return res.redirect('/auth/login');
+    }
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user || !user.admin) {
+            return res.redirect('/profile');
+        }
+        next();
+    } catch (err) {
+        res.redirect('/profile');
+    }
+};
+
+// Admin profil sayfası route'u
+app.get('/adminprofil', requireAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/auth/login');
+        }
+        
+        // Tüm kullanıcıları getir
+        const users = await User.find({ admin: { $ne: true } });
+        
+        // Her kullanıcı için okunmamış mesaj sayısını hesapla
+        const usersWithUnreadCount = await Promise.all(users.map(async (member) => {
+            const unreadCount = await Message.countDocuments({
+                room: member.email,
+                isRead: false,
+                sender: member.ad + ' ' + member.soyad // Sadece kullanıcıdan gelen mesajları say
+            });
+            return {
+                ...member.toObject(),
+                unreadCount
+            };
+        }));
+
+        res.render('adminprofil', { user, users: usersWithUnreadCount });
+    } catch (err) {
+        res.redirect('/auth/login');
+    }
+});
+
+// Profil yönlendirme middleware'i
+const profileRedirect = async (req, res, next) => {
+    if (!req.session.userId) {
+        return res.redirect('/auth/login');
+    }
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/auth/login');
+        }
+        if (user.admin === true) {
+            return res.redirect('/adminprofil');
+        }
+        return res.redirect('/profile');
+    } catch (err) {
+        return res.redirect('/auth/login');
+    }
+};
+
+// Profil yönlendirme route'u
+app.get('/redirect-profile', profileRedirect);
 
 // Sunucuyu başlat
 const PORT = process.env.PORT || 3000;

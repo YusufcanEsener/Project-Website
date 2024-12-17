@@ -23,7 +23,11 @@
             <a href="/iletisim" class="button">İletişim</a>
         </nav>
         <% if (locals.user) { %>
-            <a href="/profile"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Profilim</i></a>
+            <% if (user.admin) { %>
+                <a href="/adminprofil"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Admin Profil</i></a>
+            <% } else { %>
+                <a href="/profile"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Profilim</i></a>
+            <% } %>
             <form action="/auth/logout" method="POST" style="display: inline;">
                 <button type="submit" class="logout-button">
                     <i class="bi bi-box-arrow-right" style="position:relative;left: 5px;font-size: 20px;color: white;"> Çıkış</i>
@@ -111,8 +115,11 @@
             <p>&copy; 2024 Your Company. All Rights Reserved.</p>
         </div>
     </footer>
-    <div id="ok">
-        <a href="/iletisim" style=" color: #fff;"><i class="fa-solid fa-arrow-up"></i></a>
+    <div class="floating-buttons">
+        <a href="<%= locals.user ? (user.uyelikBitisTarihi && new Date(user.uyelikBitisTarihi) > new Date() ? '/mesaj' : '/profile') : '/auth/login' %>" class="chat-button">
+            <i class="bi bi-chat-fill"></i>
+        </a>
     </div>
+    <a href="/iletisim" id="ok"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>
