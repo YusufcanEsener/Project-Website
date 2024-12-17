@@ -16,21 +16,21 @@ Bu proje yazılım mühendisliği dersi için hazırlanmış bir websitesidir. P
 
 
 ### Projeyi indirme
-```http
+```
     git clone https://github.com/YusufcanEsener/Project-Website.git
 ```
 ### Dosya dizinini değiştirme
-```http
+```
     cd src
 ```
 
 ### Gerekli kütüphanelerin indirilmesi
-```http
+```
     npm i
 ```
 
 ### Projeyi çalıştırma
-```http
+```
     node app.js
 ```
 
