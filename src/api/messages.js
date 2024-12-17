@@ -2,21 +2,21 @@ const express = require('express');
 const Message = require('../models/Message');
 const router = express.Router();
 
-// Mesajları almak için GET isteği
-router.get('/', async (req, res) => {
+// Belirli bir odanın mesajlarını getir
+router.get('/:room', async (req, res) => {
     try {
-        const messages = await Message.find().sort({ createdAt: -1 }); // En son mesajlar önce gelir
+        const messages = await Message.find({ room: req.params.room }).sort({ createdAt: -1 });
         res.status(200).json(messages);
     } catch (err) {
         res.status(500).json({ error: 'Mesajlar alınamadı', message: err.message });
     }
 });
 
-// Mesaj göndermek için POST isteği
+// Yeni mesaj kaydet
 router.post('/', async (req, res) => {
     try {
-        const { message, sender } = req.body;
-        const newMessage = new Message({ sender, message });
+        const { message, sender, room } = req.body;
+        const newMessage = new Message({ sender, message, room });
         await newMessage.save();
         res.status(201).json(newMessage);
     } catch (err) {

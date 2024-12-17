@@ -1,5 +1,8 @@
-const socket = io.connect('http://localhost:3001');
+// URL'den room parametresini al
+const urlParams = new URLSearchParams(window.location.search);
+const userRoom = urlParams.get('room') || 'default-room';
 
+const socket = io.connect('http://localhost:3001');
 const sender = document.getElementById('sender');
 const message = document.getElementById('message');
 const submitBtn = document.getElementById('submitBtn');
@@ -15,64 +18,78 @@ fetch('/auth/current-user')
         throw new Error('Kullanıcı bilgisi alınamadı');
     })
     .then(data => {
-        sender.value = data.ad + " " + data.soyad; // Kullanıcı adı veya email
-        sender.disabled = true;
+        if (!data || !data.email) {
+            throw new Error('Kullanıcı email bilgisi bulunamadı');
+        }
+
+        sender.value = `${data.ad} ${data.soyad}`;
+        console.log('Room:', userRoom); // Debug için
+
+        // Odaya katıl
+        socket.emit('join-room', userRoom);
+        
+        // Kullanıcının mesajlarını yükle
+        return fetch(`/api/messages/${userRoom}`);
+    })
+    .then(response => response.json())
+    .then(messages => {
+        output.innerHTML = '';
+        messages.forEach(msg => {
+            output.insertAdjacentHTML('afterbegin', `<p><strong>${msg.sender} :</strong> ${msg.message}</p>`);
+        });
     })
     .catch(err => {
         console.error('Hata:', err.message);
     });
-    window.onload = () => {
-        fetch('/api/messages')  // Mesajları API'den al
-            .then(response => response.json())
-            .then(data => {
-                // Veritabanından alınan mesajları ekranda göster
-                data.forEach(msg => {
-                    // Mesajı en üste ekle
-                    output.insertAdjacentHTML('afterbegin', `<p><strong>${msg.sender} :</strong> ${msg.message}</p>`);
-                });
-                
-            })
-            .catch(err => {
-                console.error('Mesajlar alınamadı:', err.message);
-            });
-    };
 
-submitBtn.addEventListener('click', () => {
+// Mesaj gönderme fonksiyonu
+function sendMessage() {
+    if (!message.value || !userRoom) return;
+
     const messageData = {
         message: message.value,
-        sender: sender.value
+        sender: sender.value,
+        room: userRoom
     };
 
-    // Mesajı sunucuya gönder
+    // Socket üzerinden mesajı gönder
     socket.emit('chat', messageData);
 
-    // Mesajı veritabanına kaydet
+    // API'ye mesajı kaydet
     fetch('/api/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(messageData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Mesaj veritabanına kaydedildi:', data);
-        
-    })
-    .catch(err => {
-        console.error('Mesaj kaydedilemedi:', err);
     });
 
-    message.value = '';  // Mesajı temizle
+    message.value = '';
+}
+
+// Submit butonu için event listener
+submitBtn.addEventListener('click', sendMessage);
+
+// Enter tuşu için event listener
+message.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
 });
 
-socket.on('chat', data => {
+// Socket olaylarını dinle
+socket.on('chat', (data) => {
     feedback.innerHTML = '';
-    output.innerHTML += `<p><strong>${data.sender} : </strong>${data.message}</p>`;
+    output.insertAdjacentHTML('afterbegin', `<p><strong>${data.sender} :</strong> ${data.message}</p>`);
 });
 
+socket.on('typing', (data) => {
+    feedback.innerHTML = `<p><em>${data} yazıyor...</em></p>`;
+});
+
+// Yazıyor bildirimi için
 message.addEventListener('keypress', () => {
-    socket.emit('typing', sender.value);
-});
-
-socket.on('typing', data => {
-    feedback.innerHTML = `<p>${data} yazıyor...</p>`;
+    if (userRoom) {
+        socket.emit('typing', { sender: sender.value, room: userRoom });
+    }
 });

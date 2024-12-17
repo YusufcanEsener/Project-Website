@@ -20,14 +20,14 @@ router.post('/register', async (req, res) => {
             return res.status(400).send('Şifreler eşleşmiyor');
         }
 
-    
+
 
         // Yeni kullanıcı oluştur
         const user = new User({ ad, soyad, email, sifre });
         await user.save();
 
         res.redirect('/auth/login');
-    }  catch (err) {
+    } catch (err) {
         console.error('Kayıt işlemi başarısız:', err.message);
         res.status(400).send(`Kayıt işlemi başarısız: ${err.message}`);
     }
@@ -47,7 +47,7 @@ router.post('/update-membership4', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik =  4; // Mevcut değer yoksa 0'dan başla
+        user.uyelik = 4; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
@@ -79,7 +79,7 @@ router.post('/update-membership2', async (req, res) => {
             return res.status(404).send('Kullanıcı bulunamadı');
         }
 
-        user.uyelik =  2; // Mevcut değer yoksa 0'dan başla
+        user.uyelik = 2; // Mevcut değer yoksa 0'dan başla
         const currentTime = Date.now(); // Şu anki tarihi alıyoruz
         user.uyelikAt = currentTime; // Şu anki tarihi kullanıcıya atıyoruz
 
@@ -139,7 +139,11 @@ router.get('/current-user', (req, res) => {
             if (!user) {
                 return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
             }
-            res.json({ ad: user.ad, soyad: user.soyad });
+            res.json({ 
+                ad: user.ad, 
+                soyad: user.soyad,
+                email: user.email  // Email bilgisini de gönderiyoruz
+            });
         })
         .catch(err => {
             console.error(err);
@@ -186,24 +190,34 @@ router.post('/login', async (req, res) => {
     try {
         const { email, sifre } = req.body;
 
-        // Kullanıcıyı email ile bul
+
         const user = await User.findOne({ email });
-        
         if (!user) {
-            return res.status(400).send('Kullanıcı bulunamadı');
+            return res.status(400).send('Email veya şifre hatalı');
         }
 
-        // Girilen şifreyi kontrol et
-        if (user.sifre !== sifre) {
-            return res.status(400).send('Şifre yanlış');
+
+        
+        // Geçici çözüm: Düz metin karşılaştırması
+        const isMatch = (sifre === user.sifre) || await bcrypt.compare(sifre, user.sifre);
+
+
+        if (!isMatch) {
+            return res.status(400).send('Email veya şifre hatalı');
         }
 
-        // Oturum oluştur ve ana sayfaya yönlendir
         req.session.userId = user._id;
-        res.redirect('/');
+
+
+        if (user.admin === true) {
+            return res.redirect('/adminprofil');
+        } else {
+            return res.redirect('/profile');
+        }
+
     } catch (err) {
-        console.error('Giriş işlemi hatası:', err.message);
-        res.status(400).send('Giriş başarısız');
+        console.error('Login hatası:', err);
+        res.status(500).send('Sunucu hatası: ' + err.message);
     }
 });
 
@@ -214,6 +228,26 @@ router.post('/logout', (req, res) => {
         }
         res.redirect('/');
     });
+});
+
+// Profil yönlendirme fonksiyonu
+const redirectToCorrectProfile = (user, res) => {
+    if (user.admin === true) {
+        res.redirect('/adminprofil');
+    } else {
+        res.redirect('/profile');
+    }
+};
+
+// Ödeme işlemlerinden sonra bu fonksiyonu kullan
+router.post('/update-membership', async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId);
+        // ... ödeme işlemleri ...
+        redirectToCorrectProfile(user, res);
+    } catch (err) {
+        // ... hata yönetimi ...
+    }
 });
 
 module.exports = router;

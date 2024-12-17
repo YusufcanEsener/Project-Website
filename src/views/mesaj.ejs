@@ -55,8 +55,12 @@
                 <a href="http://localhost:3000/iletisim" class="button">İletişim</a>
             </nav>
             <% if (locals.user) { %>
-                <a href="http://localhost:3000/profile"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Profilim</i></a>
-                <form action="http://localhost:3000/auth/logout" method="POST" style="display: inline;">
+                <% if (user.admin) { %>
+                    <a href="/adminprofil"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Admin Profil</i></a>
+                <% } else { %>
+                    <a href="/profile"><i class="bi bi-person" style="position:relative;left: 100px;font-size: 20px;"> Profilim</i></a>
+                <% } %>
+                <form action="/auth/logout" method="POST" style="display: inline;">
                     <button type="submit" class="logout-button">
                         <i class="bi bi-box-arrow-right" style="position:relative;left: 5px;font-size: 20px;color: white;"> Çıkış</i>
                     </button>
@@ -78,6 +82,15 @@
         </div>
         <script src="js/chat.js" charset="UTF-8"></script>
         <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const room = urlParams.get('room') || 'default-room';
+
+            const socket = io('http://localhost:3001', {
+                query: {
+                    room: room
+                }
+            });
+
             var input = document.getElementById("message");
             input.addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {

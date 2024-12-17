@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     uyelik: {type: Number,required:false ,default:0},
     uyelikAt: {type: Date,required:false, },
     uyelikBitis: {type: Date,required:false, },
+    admin: {type: Boolean,required:false, default:false},
     createdAt: { type: Date, default: Date.now }
 });
 

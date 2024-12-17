@@ -23,26 +23,43 @@ const io = socket(server);
 io.on('connection', (socket) => {
     console.log(`${socket.id} bağlandı`);
 
-    // Mesaj gönderildiğinde tüm bağlı kullanıcılara ilet
+    socket.on('join-room', (room) => {
+        if (room) {
+            socket.join(room);
+            console.log(`${socket.id} ${room} odasına katıldı`);
+        } else {
+            console.log('Room değeri eksik:', room);
+        }
+    });
+
     socket.on('chat', async (data) => {
-        // Veritabanına mesajı kaydet
         try {
+            // Room kontrolü
+            if (!data.room) {
+                console.error('Room değeri eksik:', data);
+                return;
+            }
+
             const newMessage = new Message({
                 sender: data.sender,
                 message: data.message,
+                room: data.room
             });
-            await newMessage.save();  // Veritabanına kaydet
+            
+            await newMessage.save();
+            
 
-            // Mesajı tüm kullanıcılara ilet
-            io.sockets.emit('chat', newMessage);
+            // Mesajı sadece ilgili odadaki kullanıcılara gönder
+            io.to(data.room).emit('chat', newMessage);
         } catch (err) {
             console.error('Mesaj kaydedilemedi:', err);
         }
     });
 
-    // Kullanıcı yazarken bildirim göndermek için
     socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', data);
+        if (data.room) {
+            socket.to(data.room).emit('typing', data.sender);
+        }
     });
 });
 
@@ -151,6 +168,59 @@ app.get('/api/messages', async (req, res) => {
 
 // Auth routes
 app.use('/auth', require('./routes/auth'));
+
+// Admin kontrolü için middleware
+const requireAdmin = async (req, res, next) => {
+    if (!req.session.userId) {
+        return res.redirect('/auth/login');
+    }
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user || !user.admin) {
+            return res.redirect('/profile');
+        }
+        next();
+    } catch (err) {
+        res.redirect('/profile');
+    }
+};
+
+// Admin profil sayfası route'u
+app.get('/adminprofil', requireAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/auth/login');
+        }
+        // Tüm kullanıcıları getir
+        const users = await User.find({ admin: { $ne: true } });
+        res.render('adminprofil', { user, users });
+    } catch (err) {
+        res.redirect('/auth/login');
+    }
+});
+
+// Profil yönlendirme middleware'i
+const profileRedirect = async (req, res, next) => {
+    if (!req.session.userId) {
+        return res.redirect('/auth/login');
+    }
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/auth/login');
+        }
+        if (user.admin === true) {
+            return res.redirect('/adminprofil');
+        }
+        return res.redirect('/profile');
+    } catch (err) {
+        return res.redirect('/auth/login');
+    }
+};
+
+// Profil yönlendirme route'u
+app.get('/redirect-profile', profileRedirect);
 
 // Sunucuyu başlat
 const PORT = process.env.PORT || 3000;

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const MessageSchema = new mongoose.Schema({
     sender: { type: String, required: true }, // Gönderenin adı
     message: { type: String, required: true }, // Mesaj içeriği
+    room: { type: String, required: true }, // Kullanıcının email'i room olarak kullanılacak
     createdAt: { type: Date, default: Date.now } // Mesajın gönderildiği tarih
 });
 
