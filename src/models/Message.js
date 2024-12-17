@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 
 // Mesaj şeması
 const MessageSchema = new mongoose.Schema({
-    sender: { type: String, required: true }, // Gönderenin adı
-    message: { type: String, required: true }, // Mesaj içeriği
-    room: { type: String, required: true }, // Kullanıcının email'i room olarak kullanılacak
-    createdAt: { type: Date, default: Date.now } // Mesajın gönderildiği tarih
+    sender: String,
+    message: String,
+    room: String,
+    isRead: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now }
 });
 
 const Message = mongoose.model('Message', MessageSchema);

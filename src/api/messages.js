@@ -24,4 +24,36 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Mesajları okundu olarak işaretle
+router.post('/mark-as-read', async (req, res) => {
+    try {
+        const { room } = req.body;
+        
+        if (!room) {
+            return res.status(400).json({ error: 'Room parametresi gerekli' });
+        }
+
+        const result = await Message.updateMany(
+            { 
+                room: room,
+                isRead: false,
+                sender: { $ne: 'Admin' } // Admin'in gönderdiği mesajları hariç tut
+            },
+            { 
+                $set: { isRead: true } 
+            }
+        );
+
+        console.log('Mesajlar okundu olarak işaretlendi:', result);
+
+        res.json({ 
+            success: true, 
+            modifiedCount: result.modifiedCount 
+        });
+    } catch (err) {
+        console.error('Mesaj güncelleme hatası:', err);
+        res.status(500).json({ error: 'Mesajlar güncellenemedi' });
+    }
+});
+
 module.exports = router;

@@ -76,29 +76,13 @@
                 <div id="output"></div>
                 <div id="feedback"></div>
             </div>
-            <input type="text" id="sender" hidden>
-            <input type="text" id="message" placeholder="Mesajınız">
-            <button id="submitBtn">Gönder</button>
+            <div class="input-container">
+                <input type="text" id="sender" hidden>
+                <input type="text" id="message" placeholder="Mesajınız...">
+                <button id="submitBtn">Gönder</button>
+            </div>
         </div>
         <script src="js/chat.js" charset="UTF-8"></script>
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            const room = urlParams.get('room') || 'default-room';
-
-            const socket = io('http://localhost:3001', {
-                query: {
-                    room: room
-                }
-            });
-
-            var input = document.getElementById("message");
-            input.addEventListener("keyup", function(event) {
-            if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("submitBtn").click();
-            }
-            });
-        </script>
     </body>
 </html>
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const favicon = require('serve-favicon');
 const path = require('path');
 const connectDB = require('./config/db');
 const User = require('./models/User');
@@ -14,11 +15,22 @@ const server = app.listen(3001, () => {
 // MongoDB bağlantısı
 connectDB();
 
+// Middleware'leri ekle
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(favicon(path.join(__dirname, 'public', 'logo.ico')));
+
 // Mesaj API'sini dahil et
 const messageRoutes = require('./api/messages'); // api/messages.js dosyanızı burada dahil edin
 app.use('/api/messages', messageRoutes);
 // Socket.io yapılandırması
-const io = socket(server);
+const io = socket(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 io.on('connection', (socket) => {
     console.log(`${socket.id} bağlandı`);
@@ -27,32 +39,26 @@ io.on('connection', (socket) => {
         if (room) {
             socket.join(room);
             console.log(`${socket.id} ${room} odasına katıldı`);
-        } else {
-            console.log('Room değeri eksik:', room);
         }
     });
 
     socket.on('chat', async (data) => {
         try {
-            // Room kontrolü
             if (!data.room) {
                 console.error('Room değeri eksik:', data);
                 return;
             }
-
-            const newMessage = new Message({
+            
+            // Mesajı odadaki tüm kullanıcılara gönder
+            io.in(data.room).emit('chat', {
                 sender: data.sender,
                 message: data.message,
-                room: data.room
+                room: data.room,
+                createdAt: data.createdAt || new Date()
             });
             
-            await newMessage.save();
-            
-
-            // Mesajı sadece ilgili odadaki kullanıcılara gönder
-            io.to(data.room).emit('chat', newMessage);
         } catch (err) {
-            console.error('Mesaj kaydedilemedi:', err);
+            console.error('Mesaj gönderilemedi:', err);
         }
     });
 
@@ -64,8 +70,6 @@ io.on('connection', (socket) => {
 });
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -192,9 +196,24 @@ app.get('/adminprofil', requireAdmin, async (req, res) => {
         if (!user) {
             return res.redirect('/auth/login');
         }
+        
         // Tüm kullanıcıları getir
         const users = await User.find({ admin: { $ne: true } });
-        res.render('adminprofil', { user, users });
+        
+        // Her kullanıcı için okunmamış mesaj sayısını hesapla
+        const usersWithUnreadCount = await Promise.all(users.map(async (member) => {
+            const unreadCount = await Message.countDocuments({
+                room: member.email,
+                isRead: false,
+                sender: member.ad + ' ' + member.soyad // Sadece kullanıcıdan gelen mesajları say
+            });
+            return {
+                ...member.toObject(),
+                unreadCount
+            };
+        }));
+
+        res.render('adminprofil', { user, users: usersWithUnreadCount });
     } catch (err) {
         res.redirect('/auth/login');
     }

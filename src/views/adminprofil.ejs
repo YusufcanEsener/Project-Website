@@ -40,7 +40,12 @@
                     <% users.forEach(function(member) { %>
                         <% if (member.uyelik > 0) { %>
                             <div class="user-card" onclick="redirectToChat('<%= member.email %>')">
-                                <h3><%= member.ad %> <%= member.soyad %></h3>
+                                <div class="card-header">
+                                    <h3><%= member.ad %> <%= member.soyad %></h3>
+                                    <% if (member.unreadCount > 0) { %>
+                                        <span class="notification-badge"><%= member.unreadCount %></span>
+                                    <% } %>
+                                </div>
                                 <p>Email: <%= member.email %></p>
                                 <p>Üyelik Tipi: 
                                     <% if (member.uyelik === 1) { %>
@@ -93,11 +98,46 @@
         color: #ccc;
         margin: 5px 0;
     }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .notification-badge {
+        background: #ff4444;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 8px;
+        font-size: 12px;
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+    }
     </style>
 
     <script>
-        function redirectToChat(memberEmail) {
-            window.location.href = `http://localhost:3001/mesaj?room=${memberEmail}`;
+        function redirectToChat(email) {
+            // Önce mesajları okundu olarak işaretle
+            fetch('/api/messages/mark-as-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ room: email })
+            })
+            .then(response => response.json())
+            .then(() => {
+                // Mesaj işaretlendikten sonra sohbet sayfasına yönlendir
+                window.location.href = `/mesaj?room=${email}`;
+            })
+            .catch(err => {
+                console.error('Hata:', err);
+                // Hata olsa bile sohbet sayfasına yönlendir
+                window.location.href = `/mesaj?room=${email}`;
+            });
         }
 
         // Tarih formatlama fonksiyonu
